@@ -1,0 +1,40 @@
+.header {
+   
+    display: flex;
+    justify-content:space-around;
+    border: 2px solid black;
+}
+
+.logo{
+    width: 150px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.nav-items ul{
+   
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.restaurant-list{
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.cards{
+    width: 250px;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.cardImg {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 15px;
+}
