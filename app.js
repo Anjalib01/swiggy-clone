@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import HeadComponent from "./components/header";
-import BodyComponent from "./components/body.js";
+import HeadComponent from "./src/components/header.js";
+import BodyComponent from "./src/components/body.js";
 
 const Layout = () => (
   <>
