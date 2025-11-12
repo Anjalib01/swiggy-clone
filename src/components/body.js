@@ -6,21 +6,22 @@ import { Link } from "react-router-dom";
 import useItemData from "./useItemData.js";
 
 const RestaurantCard = ({
+  brand,
   title,
-  description,
-  category,
+  rating,
   price,
   discountPercentage,
   images,
 }) => {
   return (
-    <div className="cards">
-      <img className="cardImg" src={images[0]} />
+    <div className="border-2 w-64 h-96 p-3 space-y-1 text-center">
+      <img className="w-full h-48 object-cover" src={images[0]} />
+      <h3 className="uppercase">{brand}</h3>
       <h3>{title}</h3>
-      <h3>{description}</h3>
-      <h3>{category}</h3>
-      <h3>{price}</h3>
-      <h3>{discountPercentage}</h3>
+      <h3>{rating}</h3>
+      <h3 className="text-green-800">
+        {price + " (" + discountPercentage + "% Off) "}
+      </h3>
     </div>
   );
 };
@@ -43,10 +44,10 @@ const BodyComponent = () => {
     <Shimer />
   ) : (
     <>
-      <div className="search-container">
+      <div className="flex justify-center m-2 h-10 space-x-4">
         <input
           type="test"
-          className="search-input"
+          className="border-2 rounded-xl w-50 p-3"
           placeholder="Search"
           value={searchText}
           onChange={(e) => {
@@ -54,7 +55,7 @@ const BodyComponent = () => {
           }}
         />
         <button
-          className="search-btn"
+          className="rounded-2xl w-20 bg-[#2c4152] text-amber-50"
           onClick={() => {
             const data = filterRestaurant(searchText, allRestaurants);
             setFilteredRestaurants(data);
@@ -63,7 +64,7 @@ const BodyComponent = () => {
           Search
         </button>
       </div>
-      <div className="restaurant-list">
+      <div className="flex  flex-wrap justify-around gap-6 m-10">
         {filteredRestaurants.length === 0 ? (
           <NoDataFound />
         ) : (

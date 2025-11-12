@@ -18,10 +18,12 @@ const RestaurantDetails = () => {
   return (
     <>
       <img src={itemDetails?.images[0]} />
-      <h1>Name : {itemDetails?.title}</h1>
-      <h2>{itemDetails?.availabilityStatus}</h2>
-      <h2>Brand : {itemDetails?.brand}</h2>
-      <h2>Warrranty : {itemDetails?.warrantyInformation}</h2>
+      <h1>{itemDetails?.brand}</h1>
+      <h2>{itemDetails?.title}</h2>
+      <h2>{itemDetails?.rating}</h2>
+      <h2>
+        {itemDetails?.price + "(" + itemDetails?.discountPercentage + "% Off"}
+      </h2>
     </>
   );
 };
