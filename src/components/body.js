@@ -1,47 +1,47 @@
 import { useEffect, useState } from "react";
 import { cloudinaryImageUrl, restaurantList } from "./constants.js";
+import Shimer from "./Shimer.js";
+import NoDataFound from "./NoDataFound.js";
+import { Link } from "react-router-dom";
+import useItemData from "./useItemData.js";
 
 const RestaurantCard = ({
-  name,
-  costForTwo,
-  cuisines,
-  avgRating,
-  cloudinaryImageId,
+  title,
+  description,
+  category,
+  price,
+  discountPercentage,
+  images,
 }) => {
   return (
     <div className="cards">
-      <img className="cardImg" src={cloudinaryImageUrl + cloudinaryImageId} />
-      <h3>{name}</h3>
-      <h3>{costForTwo}</h3>
-      <h3>{cuisines.join(", ")}</h3>
-      <h3>{avgRating} star</h3>
+      <img className="cardImg" src={images[0]} />
+      <h3>{title}</h3>
+      <h3>{description}</h3>
+      <h3>{category}</h3>
+      <h3>{price}</h3>
+      <h3>{discountPercentage}</h3>
     </div>
   );
 };
 
 function filterRestaurant(searchText, restaurants) {
   const data = restaurants.filter((restaurant) => {
-    return restaurant?.info?.name.includes(searchText);
+    return restaurant?.title.toLowerCase().includes(searchText.toLowerCase());
   });
 
   return data;
 }
 
 const BodyComponent = () => {
-  useEffect(() => {
-    getRestraunts();
-  }, []);
-
-  async function getRestraunts() {
-    const data = await fetch("");
-    const json = await data.json();
-    return json;
-  }
-
   const [searchText, setSearchText] = useState("");
-  const [restaurants, setRestaurants] = useState(restaurantList);
 
-  return (
+  const { allRestaurants, filteredRestaurants, setFilteredRestaurants } =
+    useItemData();
+
+  return !allRestaurants ? (
+    <Shimer />
+  ) : (
     <>
       <div className="search-container">
         <input
@@ -56,19 +56,23 @@ const BodyComponent = () => {
         <button
           className="search-btn"
           onClick={() => {
-            const data = filterRestaurant(searchText, restaurants);
-            setRestaurants(data);
+            const data = filterRestaurant(searchText, allRestaurants);
+            setFilteredRestaurants(data);
           }}
         >
           Search
         </button>
       </div>
       <div className="restaurant-list">
-        {restaurants.map((restaurant) => {
-          return (
-            <RestaurantCard key={restaurant.info.id} {...restaurant.info} />
-          );
-        })}
+        {filteredRestaurants.length === 0 ? (
+          <NoDataFound />
+        ) : (
+          filteredRestaurants.map((restaurant) => (
+            <Link to={"/product/" + restaurant.id} key={restaurant.id}>
+              <RestaurantCard key={restaurant.id} {...restaurant} />
+            </Link>
+          ))
+        )}
       </div>
     </>
   );
